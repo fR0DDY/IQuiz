@@ -2,32 +2,32 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>IQuiz</title>
+<title>IQuiz</title>	
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.13/angular.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script src="js/init.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.13/angular.js"></script>
 <script src="js/app.js"></script>
-<script src="js/config.js"></script>
-<script src="js/init.js"></script>
+
 <!-- Le styles -->
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 
 
 </head>
 
-<body ng-app>
+<body ng-app="iquiz">
 
 	<div class="container chat-signin">
 		<form class="form-signin">
 			<h2 class="form-signin-heading">IQuiz</h2>
-			<label for="nickname">Nickname</label> <input type="text"
-				class="input-block-level" placeholder="Nickname" id="nickname">
-			
+			<label for="nickname">Enter Name</label> <input type="text"
+				ng-model="nickname" class="input-block-level" placeholder="Nickname" id="nickname">
+		
 			<ng-button class="btn btn-large btn-primary" type="submit" ng-click="enter"
 				id="enterRoom">Enter</ng-button>
+				
+				<h2>Welcome {{nickname}}</h2> 
 		</form>
 	</div>
 </body>
