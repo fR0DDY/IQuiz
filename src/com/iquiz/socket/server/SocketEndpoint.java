@@ -13,6 +13,7 @@ public class SocketEndpoint {
  
 	@OnOpen
 	public void open(final Session session) {
+		System.out.println("Opening...");
 	}
  
 	@OnMessage
