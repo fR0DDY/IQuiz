@@ -1,11 +1,5 @@
 
-	var wsocket;
-//	var serviceLocation = "ws://0.0.0.0:8080/hascode/chat/";
-        var serviceLocation = "ws://" + document.location.host + "/ChatServer/chat/"; 
-	var $nickName;
-	var $message;
-	var $chatWindow;
-	var room = '';
+	
 
 	function onMessageReceived(evt) {
             
