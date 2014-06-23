@@ -2,7 +2,7 @@ angular.module('iquiz').controller('IndexController',
 		['$scope',function ($scope) {
     
 			var wsocket;
-		    var serviceLocation = "ws://" + document.location.host + "/ChatServer/chat/"; 
+		    var serviceLocation = "ws://" + document.location.host + "/IQuiz/iquiz/"; 
 			$scope.nickname  = "a";
 			var message;
 			var chatWindow;
@@ -10,7 +10,7 @@ angular.module('iquiz').controller('IndexController',
 			
 			$scope.connectToChatserver = function() {
 				
-				wsocket = new WebSocket(serviceLocation + room);
+				wsocket = new WebSocket(serviceLocation);
 				wsocket.onmessage = $scope.onMessageReceived;
 			};
 			
