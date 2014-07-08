@@ -1,15 +1,11 @@
 package com.iquiz.socket.decoders;
 
 
-import java.io.StringReader;
-import java.util.Date;
-
-import javax.json.Json;
-import javax.json.JsonObject;
 import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iquiz.socket.messages.SocketMessage;
 
 public class SocketMessageDecoder implements Decoder.Text<SocketMessage> {
@@ -22,14 +18,14 @@ public class SocketMessageDecoder implements Decoder.Text<SocketMessage> {
 	}
 
 	@Override
-	public SocketMessage decode(final String textMessage) throws DecodeException {
-		SocketMessage chatMessage = new SocketMessage();
-		JsonObject obj = Json.createReader(new StringReader(textMessage))
-				.readObject();
-		chatMessage.setMessage(obj.getString("message"));
-		chatMessage.setSender(obj.getString("sender"));
-		chatMessage.setReceived(new Date());
-		return chatMessage;
+	public SocketMessage decode(final String socketMessage) throws DecodeException {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(socketMessage, SocketMessage.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
