@@ -3,10 +3,6 @@ package com.iquiz.socket.server;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
 import java.util.logging.Logger;
 
 import javax.websocket.OnMessage;
@@ -15,7 +11,10 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/iquiz/{userid}")
+import com.iquiz.socket.decoders.SocketMessageDecoder;
+import com.iquiz.socket.encoders.SocketMessageEncoder;
+
+@ServerEndpoint(value = "/iquiz/{userid}", encoders = SocketMessageEncoder.class, decoders = SocketMessageDecoder.class)
 public class SocketEndpoint {
 
 	private final Logger log = Logger.getLogger(getClass().getName());
@@ -58,6 +57,10 @@ public class SocketEndpoint {
 			}
 			queue.add(userId2);
 		}
+	}
+	
+	public void createRandomQuestions(){
+		Socket
 	}
 
 	@OnMessage
