@@ -29,7 +29,19 @@
 				id="enterRoom">Enter</ng-button>
 				
 				<h2>Welcome {{nickname}}</h2>
-				<h2>Message : {{msg}}</h2>  
+				<h2>You are playing with : {{opponentName}}</h2>
+			
+				<div ng-show="index > -1">
+				 
+				 <h3>Question {{index}}: {{questions[index].question}}</h3>
+				 <ul>
+				 <li>{{questions[index].options[0]}}</li>				 
+				 <li>{{questions[index].options[1]}}</li>
+				 <li>{{questions[index].options[2]}}</li>
+				 <li>{{questions[index].options[3]}}</li>
+				 </ul>
+				 </div>
+				  
 		</form>
 	</div>
 </body>

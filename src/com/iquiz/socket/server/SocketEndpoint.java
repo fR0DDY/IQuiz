@@ -3,16 +3,22 @@ package com.iquiz.socket.server;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.UUID;
 import java.util.logging.Logger;
 
+import javax.websocket.EncodeException;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import com.iquiz.entities.Match;
+import com.iquiz.helpers.QuestionHelper;
 import com.iquiz.socket.decoders.SocketMessageDecoder;
 import com.iquiz.socket.encoders.SocketMessageEncoder;
+import com.iquiz.socket.messages.MessageCode;
+import com.iquiz.socket.messages.SocketMessage;
 
 @ServerEndpoint(value = "/iquiz/{userid}", encoders = SocketMessageEncoder.class, decoders = SocketMessageDecoder.class)
 public class SocketEndpoint {
@@ -33,6 +39,10 @@ public class SocketEndpoint {
 		checkmadi(session);
 	}
 
+	
+	
+	
+	
 	private void checkmadi(Session session) throws IOException {
 		while (session.isOpen() && queue.size() > 1) {
 			String userId1 = queue.poll();
@@ -51,21 +61,49 @@ public class SocketEndpoint {
 				}
 			}
 			if (b1) {
-				s1.getBasicRemote().sendText("You are plaing with " + userId2);
-				session.getBasicRemote().sendText("You are plaing with " + userId1);
+				SocketMessage msg = new SocketMessage();
+				msg.setMessageCode(MessageCode.PlayerFound);
+				msg.setQuestions(QuestionHelper.getRandomQuestions());
+				String matchId = UUID.randomUUID().toString();
+				msg.setMatchId(matchId);
+				GameEngine.getEngine().getMatchCache().put(matchId, new Match(userId1,userId2,matchId));
+				try {
+					msg.setMessage(userId2);
+					s1.getBasicRemote().sendObject(msg);
+					msg.setMessage(userId1);
+					session.getBasicRemote().sendObject(msg);
+				} catch (EncodeException e) {
+					// TODO Auto-generated catch block
+					s1.getBasicRemote().sendText("Error on Encoding");
+					session.getBasicRemote().sendText("Error on Encoding");
+					e.printStackTrace();
+				}
 				return;
 			}
 			queue.add(userId2);
 		}
 	}
-	
-	public void createRandomQuestions(){
-		
-	}
+
 
 	@OnMessage
-	public void onMessage(final Session session, final String chatMessage) {
-		System.out.println("chatMessage: " + chatMessage);
-
+	public void onMessage(final Session session, final SocketMessage socketMessage) {
+		System.out.println("chatMessage: " + socketMessage.toString());
+		
+	
+		switch(socketMessage.getMessageCode()){
+		case Error:
+			break;
+		case PlayerFound:
+			break;
+		case PlayerReady:
+			System.out.println("Starting Game");			
+			GameEngine.getEngine().startGame(session,socketMessage);
+			break;
+		case StartGame:
+			break;
+		default:
+			break;
+		}
+		
 	}
 }

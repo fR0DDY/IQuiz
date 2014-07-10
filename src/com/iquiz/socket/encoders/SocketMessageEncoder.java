@@ -18,10 +18,11 @@ public class SocketMessageEncoder implements Encoder.Text<SocketMessage> {
 	}
 
 	@Override
-	public String encode(final SocketMessage chatMessage) throws EncodeException {
+	public String encode(final SocketMessage socketMessage) throws EncodeException {
+		System.out.println("From Encoder : "+ socketMessage);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.writeValueAsString(chatMessage);
+			return mapper.writeValueAsString(socketMessage);
 		}catch (Exception e) {
 			return null;
 		}

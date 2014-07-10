@@ -19,6 +19,7 @@ public class SocketMessageDecoder implements Decoder.Text<SocketMessage> {
 
 	@Override
 	public SocketMessage decode(final String socketMessage) throws DecodeException {
+		System.out.println("From Decoder : "+socketMessage);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			return mapper.readValue(socketMessage, SocketMessage.class);

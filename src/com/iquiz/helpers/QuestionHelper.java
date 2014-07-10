@@ -16,7 +16,7 @@ public class QuestionHelper {
 			q.getOptions().add("Shahrukh Khan");
 			q.getOptions().add("Aamir Khan");
 			q.getOptions().add("Sohail Khan");
-			q.setAnswer("Aamir Khan");
+//			q.setAnswer("Aamir Khan");
 			list.add(q);
 		}
 		return list;
